@@ -21,18 +21,15 @@ public class BoardQuery extends QuerydslRepositorySupport {
     }
 
     public List<BoardResponse> findBoardList() {
-
         List<BoardResponse> query = jpaQueryFactory
                 .select(Projections.fields(BoardResponse.class,
                         board.idx,
-                        board.userIdx.userName,
-                        board.userIdx.email,
+                        board.userEmail,
                         board.title,
                         board.content,
                         board.regDate
                 ))
                 .from(board)
-                .innerJoin(board.userIdx)
                 .fetch();
 
         return query;

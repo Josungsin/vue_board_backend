@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -29,7 +31,7 @@ public class UserService {
 
     @Transactional
     public Boolean checkEmail(String userEmail) {
-        User user = userRepository.findByEmail(userEmail);
+        Optional<User> user = userRepository.findByEmail(userEmail);
         if (user != null) {
             throw new BadRequestException("이미 사용중인 이메일 입니다.");
         }

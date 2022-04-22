@@ -1,7 +1,10 @@
 package com.example.boardbackend.domain.board.entity;
 
-import com.example.boardbackend.domain.user.entity.User;
-import lombok.*;
+import com.example.boardbackend.domain.SaveTimeEntity;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,15 +14,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "board")
-public class Board {
+public class Board extends SaveTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @ManyToOne
-    @JoinColumn(name = "user_idx", nullable = false)
-    private User userIdx;
+    @Column(name = "user_email")
+    private String userEmail;
 
     @Column(name = "title")
     private String title;
@@ -27,19 +29,11 @@ public class Board {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "reg_date")
-    private LocalDateTime regDate;
-
-    @Column(name = "mod_date")
-    private LocalDateTime modDate;
-
     @Builder
-    public Board(Long idx, User userIdx, String title, String content, LocalDateTime regDate, LocalDateTime modDate) {
+    public Board(Long idx, String userEmail, String title, String content) {
         this.idx = idx;
-        this.userIdx = userIdx;
+        this.userEmail = userEmail;
         this.title = title;
         this.content = content;
-        this.regDate = regDate;
-        this.modDate = modDate;
     }
 }

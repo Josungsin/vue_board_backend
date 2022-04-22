@@ -5,14 +5,14 @@ import static com.querydsl.core.types.PathMetadataFactory.*;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
+import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
 
 
 /**
  * QSaveTimeEntity is a Querydsl query type for SaveTimeEntity
  */
-@Generated("com.querydsl.codegen.DefaultSupertypeSerializer")
+@Generated("com.querydsl.codegen.SupertypeSerializer")
 public class QSaveTimeEntity extends EntityPathBase<SaveTimeEntity> {
 
     private static final long serialVersionUID = 1463274888L;
