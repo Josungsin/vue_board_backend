@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class BoardResponse {
+public class BoardListResponse {
 
     private Long idx;
 

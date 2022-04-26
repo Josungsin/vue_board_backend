@@ -11,10 +11,5 @@ class BoardQueryTest {
     @Autowired
     private BoardQuery boardQuery;
 
-    @Test
-    void 조회_테스트() {
-        boardQuery.findBoardList();
-
-    }
 
 }

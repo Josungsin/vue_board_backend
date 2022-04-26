@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @ToString
 @Getter
@@ -29,11 +28,16 @@ public class Board extends SaveTimeEntity {
     @Column(name = "content")
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_idx")
+    private BoardCategory boardCategory;
+
     @Builder
-    public Board(Long idx, String userEmail, String title, String content) {
+    public Board(Long idx, String userEmail, String title, String content, BoardCategory boardCategory) {
         this.idx = idx;
         this.userEmail = userEmail;
         this.title = title;
         this.content = content;
+        this.boardCategory = boardCategory;
     }
 }

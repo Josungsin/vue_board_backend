@@ -11,4 +11,6 @@ public class BoardRequest {
 
     private String content;
 
+    private Long categoryIdx;
+
 }

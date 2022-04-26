@@ -1,6 +1,10 @@
 package com.example.boardbackend.query.board;
 
-import com.example.boardbackend.payroad.BoardResponse;
+import com.example.boardbackend.controller.BoardRestController;
+import com.example.boardbackend.payroad.BoardCategoryListResponse;
+import com.example.boardbackend.payroad.BoardDetailResponse;
+import com.example.boardbackend.payroad.BoardListResponse;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.example.boardbackend.domain.board.entity.QBoard.board;
+import static com.example.boardbackend.domain.board.entity.QBoardCategory.boardCategory;
 
 @Repository
 public class BoardQuery extends QuerydslRepositorySupport {
@@ -20,9 +25,9 @@ public class BoardQuery extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public List<BoardResponse> findBoardList() {
-        List<BoardResponse> query = jpaQueryFactory
-                .select(Projections.fields(BoardResponse.class,
+    public List<BoardListResponse> findBoardList(BooleanBuilder builder) {
+        List<BoardListResponse> query = jpaQueryFactory
+                .select(Projections.fields(BoardListResponse.class,
                         board.idx,
                         board.userEmail,
                         board.title,
@@ -30,6 +35,39 @@ public class BoardQuery extends QuerydslRepositorySupport {
                         board.regDate
                 ))
                 .from(board)
+                .where(builder)
+                .orderBy(board.regDate.desc())
+                .fetch();
+
+        return query;
+    }
+
+    public BoardDetailResponse findBoardDetail(Long boardIdx) {
+        BoardDetailResponse query = jpaQueryFactory
+                .select(Projections.fields(BoardDetailResponse.class,
+                        board.idx,
+                        board.userEmail,
+                        board.title,
+                        board.content,
+                        board.boardCategory.categoryName,
+                        board.regDate,
+                        board.modDate
+                ))
+                .from(board)
+                .innerJoin(board.boardCategory)
+                .where(board.idx.eq(boardIdx))
+                .fetchOne();
+
+        return query;
+    }
+
+    public List<BoardCategoryListResponse> findBoardCategoryList(){
+        List<BoardCategoryListResponse> query = jpaQueryFactory
+                .select(Projections.fields(BoardCategoryListResponse.class,
+                        boardCategory.idx,
+                        boardCategory.categoryName
+                ))
+                .from(boardCategory)
                 .fetch();
 
         return query;
