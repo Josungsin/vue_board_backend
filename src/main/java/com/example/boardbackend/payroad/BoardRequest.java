@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class BoardRequest {
 
-    private String userEmail;
+    private String userName;
 
     private String title;
 

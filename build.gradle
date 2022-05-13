@@ -29,6 +29,12 @@ dependencies {
     testImplementation ('org.springframework.boot:spring-boot-starter-test'){
         exclude module: 'junit' //junit4 제외
     }
+    // valid 사용
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //Spring Security
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.5'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+
     // Querydsl 추가 시작
     implementation 'com.querydsl:querydsl-jpa'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"

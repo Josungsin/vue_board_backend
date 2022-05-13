@@ -23,6 +23,9 @@ public class User extends SaveTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @Column(name = "user_id")
+    private String userId;
+
     @Column(name = "email")
     private String email;
 
@@ -33,8 +36,9 @@ public class User extends SaveTimeEntity {
     private String password;
 
     @Builder
-    public User(Long idx, String email, String userName, String password) {
+    public User(Long idx, String userId, String email, String userName, String password) {
         this.idx = idx;
+        this.userId = userId;
         this.email = email;
         this.userName = userName;
         this.password = password;

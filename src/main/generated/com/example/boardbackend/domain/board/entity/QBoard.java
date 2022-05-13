@@ -38,7 +38,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final StringPath title = createString("title");
 
-    public final StringPath userEmail = createString("userEmail");
+    public final com.example.boardbackend.domain.user.entity.QUser user;
 
     public QBoard(String variable) {
         this(Board.class, forVariable(variable), INITS);
@@ -59,6 +59,7 @@ public class QBoard extends EntityPathBase<Board> {
     public QBoard(Class<? extends Board> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.boardCategory = inits.isInitialized("boardCategory") ? new QBoardCategory(forProperty("boardCategory")) : null;
+        this.user = inits.isInitialized("user") ? new com.example.boardbackend.domain.user.entity.QUser(forProperty("user")) : null;
     }
 
 }

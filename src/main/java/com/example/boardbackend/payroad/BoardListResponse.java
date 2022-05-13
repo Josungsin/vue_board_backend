@@ -10,7 +10,7 @@ public class BoardListResponse {
 
     private Long idx;
 
-    private String userEmail;
+    private String userName;
 
     private String title;
 

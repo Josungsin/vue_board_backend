@@ -1,6 +1,7 @@
 package com.example.boardbackend.domain.board.entity;
 
 import com.example.boardbackend.domain.SaveTimeEntity;
+import com.example.boardbackend.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,9 @@ public class Board extends SaveTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column(name = "user_email")
-    private String userEmail;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_idx")
+    private User user;
 
     @Column(name = "title")
     private String title;
@@ -33,9 +35,9 @@ public class Board extends SaveTimeEntity {
     private BoardCategory boardCategory;
 
     @Builder
-    public Board(Long idx, String userEmail, String title, String content, BoardCategory boardCategory) {
+    public Board(Long idx, User user, String title, String content, BoardCategory boardCategory) {
         this.idx = idx;
-        this.userEmail = userEmail;
+        this.user = user;
         this.title = title;
         this.content = content;
         this.boardCategory = boardCategory;

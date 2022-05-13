@@ -1,13 +1,15 @@
 package com.example.boardbackend.service;
 
-import com.example.boardbackend.Exception.BadRequestException;
+import com.example.boardbackend.domain.board.BoardCategoryRepository;
 import com.example.boardbackend.domain.user.UserRepository;
-import com.example.boardbackend.domain.user.entity.User;
+import com.example.boardbackend.query.user.UserQuery;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
+import static com.example.boardbackend.domain.board.entity.QBoardCategory.boardCategory;
 
 @SpringBootTest
 class UserServiceTest {
@@ -15,26 +17,24 @@ class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    void optional_test() {
-        String email = "sungsin1030@naver.com";
+    @Autowired
+    private BoardCategoryRepository boardCategoryRepository;
 
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            System.out.println("이미 존재하는 이메일");
-        } else
-            System.out.println("사용 가능한 이메일!");
-    }
+    @Autowired
+    private UserQuery userQuery;
+
+    @Autowired(required = false)
+    private PasswordEncoder passwordEncoder;
 
     @Test
-    void optional_test2() {
-        Long idx = 4L;
+    void password_test(){
+        String password = "123456789";
+        String password2 = "123456789324242423";
 
-        userRepository.findById(idx).ifPresent(a -> {
-            throw new BadRequestException("이미 존재함!!");
-        });
+        String encodePassword = passwordEncoder.encode(password);
 
-        System.out.println("없음!");
+        boolean check = passwordEncoder.matches(password, encodePassword);
+        boolean check2 = passwordEncoder.matches(password2, encodePassword);
     }
 
 }

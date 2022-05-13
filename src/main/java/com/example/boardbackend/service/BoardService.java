@@ -1,6 +1,6 @@
 package com.example.boardbackend.service;
 
-import com.example.boardbackend.Exception.BadRequestException;
+import com.example.boardbackend.exception.BadRequestException;
 import com.example.boardbackend.controller.BoardRestController;
 import com.example.boardbackend.domain.board.BoardCategoryRepository;
 import com.example.boardbackend.domain.board.BoardRepository;
@@ -31,7 +31,6 @@ public class BoardService {
                .orElseThrow(() -> new BadRequestException("카테고리가 존재하지 않습니다."));
 
         Board board = Board.builder()
-                .userEmail(boardRequest.getUserEmail())
                 .title(boardRequest.getTitle())
                 .content(boardRequest.getContent())
                 .boardCategory(boardCategory)

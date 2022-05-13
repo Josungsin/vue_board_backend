@@ -1,4 +1,4 @@
-package com.example.boardbackend.Exception;
+package com.example.boardbackend.exception;
 
 public class BadRequestException extends RuntimeException{
 

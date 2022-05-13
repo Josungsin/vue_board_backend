@@ -1,12 +1,14 @@
 package com.example.boardbackend.controller;
 
 import com.example.boardbackend.domain.board.entity.QBoard;
+import com.example.boardbackend.enums.ISortName;
 import com.example.boardbackend.payroad.BoardCategoryListResponse;
 import com.example.boardbackend.payroad.BoardDetailResponse;
 import com.example.boardbackend.payroad.BoardListResponse;
 import com.example.boardbackend.payroad.BoardRequest;
 import com.example.boardbackend.query.board.BoardQuery;
 import com.example.boardbackend.service.BoardService;
+import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.StringPath;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +35,8 @@ public class BoardRestController {
 
     @ApiOperation("게시글 리스트")
     @GetMapping("/list")
-    public ResponseEntity<List<BoardListResponse>> findBoardList(@RequestParam(required = false) BoardSearchTypeEnum searchType, String searchKeyword) {
+    public ResponseEntity<List<BoardListResponse>> findBoardList(@RequestParam(required = false) BoardSearchTypeEnum searchType, String searchKeyword,
+                                                                 SortNameEnum sortName) {
         return ResponseEntity.ok().body(boardService.findBoardList(searchType, searchKeyword));
     }
 
@@ -53,7 +56,7 @@ public class BoardRestController {
      * 검색타입
      */
     public enum BoardSearchTypeEnum {
-        TITLE(QBoard.board.title), USER(QBoard.board.userEmail);
+        TITLE(QBoard.board.title), USER(QBoard.board.user.userName);
         private StringPath path;
 
         BoardSearchTypeEnum(StringPath path) {
@@ -62,6 +65,23 @@ public class BoardRestController {
 
         public StringPath getPath() {
             return path;
+        }
+    }
+
+    /**
+     * 소팅
+     */
+    public enum SortNameEnum implements ISortName {
+        TITLE(QBoard.board.title), DATE(QBoard.board.user.regDate);
+
+        private ComparableExpressionBase expression;
+
+        SortNameEnum(ComparableExpressionBase expression) {
+            this.expression = expression;
+        }
+
+        public ComparableExpressionBase getExpression() {
+            return expression;
         }
     }
 }
